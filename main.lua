@@ -16,12 +16,25 @@ isGameOver = false
 function love.load()
   love.graphics.setBackgroundColor(189, 195, 255)
   player.img = love.graphics.newImage('dude.png')
+  jumpSND = love.audio.newSource('jump2.wav')
+  hitSND = love.audio.newSource('hit.wav')
+  pointSND = love.audio.newSource('point.wav')
+  font = love.graphics.setNewFont(35)
 end
 
 function love.update(dt)
-  if love.keyboard.isDown('escape') then
-  	love.love.event.push('quit')
-  end
+	--exit
+ 	if love.keyboard.isDown('escape') then
+ 		love.love.event.push('quit')
+ 	end
+
+ 	--main loop
+ 	if isGameOver == false then
+ 		--input
+ 		if love.keyboard.isDown('a') and player.jumping == false then
+ 			love.audio.play(jumpSND)
+ 			player.jumping = true
+ 		end
 end
 
 function love.draw()
