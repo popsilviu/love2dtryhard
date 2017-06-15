@@ -79,6 +79,14 @@ function love.update(dt)
                 love.audio.play(pointSND)
             end
         end
+
+        --determine collisions
+        for i, obstacle in ipairs(obstacles) do
+            if checkCollision(player.x, player.y, player.img.getWidth(), player.img.getHeight(), obstacle.x, obstacle.y, obstacle.width, obstacle.height) then
+                isGameOver = true
+                love.audio.play(hitSND)
+            end
+        end
 end
 
 function love.draw()
