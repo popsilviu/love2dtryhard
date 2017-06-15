@@ -3,7 +3,7 @@ bottomY = 420
 playerFloorY = 370
 jumpAccel = 16
 initGravity = 200
-conter = 0
+counter = 0
 obstacles = {}
 lastTimeObstacle = 1000
 gravity = 200
@@ -13,15 +13,8 @@ player = {x = 100, y = playerFloorY, jumping = false, accel = jumpAccel, img = n
 font = nil
 isGameOver = false
 
-function checkCollision(x1, y1, w1, h1, x2, y2, w2, h2)
-    return x1 < x2 + w2 and
-    x2 < x1 + w1 and
-    y1 < y2 + h2 and
-    y2 < y1 + h1
-end
-
 function love.load()
-  love.graphics.setBackgroundColor(189, 195, 255)
+  love.graphics.setBackgroundColor(122, 195, 255)
   player.img = love.graphics.newImage('dude.png')
   jumpSND = love.audio.newSource('jump2.wav')
   hitSND = love.audio.newSource('hit.wav')
@@ -29,10 +22,17 @@ function love.load()
   font = love.graphics.setNewFont(35)
 end
 
+function checkCollision(x1, y1, w1, h1, x2, y2, w2, h2)
+    return x1 < x2 + w2 and
+    x2 < x1 + w1 and
+    y1 < y2 + h2 and
+    y2 < y1 + h1
+end
+
 function love.update(dt)
 	--exit
  	if love.keyboard.isDown('escape') then
- 		love.love.event.push('quit')
+ 		love.event.quit()
  	end
 
  	--main loop
@@ -45,13 +45,13 @@ function love.update(dt)
 
         --player is jumping
         if player.jumping and player.accel > 0 then
-            player.y = player.y + player.accel
+            player.y = player.y - player.accel
             player.accel = player.accel - 1
         end
 
         --gravity
         if player.y < playerFloorY then
-            player.y = gravity*dt
+            player.y = player.y + gravity*dt
             gravity = gravity + 10
         end
 
@@ -67,9 +67,10 @@ function love.update(dt)
 
         --generate obstacles
         lastTimeObstacle = lastTimeObstacle - 10
-        if lastTimeObstacle <= 0 then
+        if lastTimeObstacle < 0 then
             lastTimeObstacle = love.math.random(200, 700)
             newObstacle = {x = 640, y = 370, width = 25, height = 50, counted = false}
+            table.insert(obstacles, newObstacle)
         end
 
         --move obstacles
@@ -89,7 +90,7 @@ function love.update(dt)
 
         --determine collisions
         for i, obstacle in ipairs(obstacles) do
-            if checkCollision(player.x, player.y, player.img.getWidth(), player.img.getHeight(), obstacle.x, obstacle.y, obstacle.width, obstacle.height) then
+            if checkCollision(player.x, player.y, player.img:getWidth(), player.img:getHeight(), obstacle.x, obstacle.y, obstacle.width, obstacle.height) then
                 isGameOver = true
                 love.audio.play(hitSND)
             end
