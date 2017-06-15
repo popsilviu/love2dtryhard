@@ -47,6 +47,16 @@ function love.update(dt)
             player.y = gravity*dt
             gravity = gravity + 10
         end
+
+        if player.y > playerFloorY then
+            player.y = playerFloorY
+        end
+
+        if player.y == playerFloorY then
+            player.jumping = false
+            player.accel = jumpAccel
+            gravity = initGravity
+        end
 end
 
 function love.draw()
