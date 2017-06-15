@@ -63,7 +63,22 @@ function love.update(dt)
         if lastTimeObstacle <= 0 then
             lastTimeObstacle = love.math.math.random(200, 700)
             newObstacle = {x = 640, y = 370, width = 25, height = 50, counted = false}
-        end        
+        end
+
+        --move obstacles
+        for i, obstacle in ipairs(obstacles) do
+            obstacle.x = obstacle.x - 10
+            --remove obstacles when offscreen
+            if obstacle.x < 0 then
+                table.remove(obstacle, i)
+            end
+            --count player points per jumped obstacle
+            if obstacle.counted == false and obstacle.x < player.x then
+                obstacle.counted = true
+                counter = counter + 1
+                love.audio.play(pointSND)
+            end
+        end
 end
 
 function love.draw()
