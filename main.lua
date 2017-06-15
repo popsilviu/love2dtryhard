@@ -13,6 +13,13 @@ player = {x = 100, y = playerFloorY, jumping = false, accel = jumpAccel, img = n
 font = nil
 isGameOver = false
 
+function checkCollision(x1, y1, w1, h1, x2, y2, w2, h2)
+    return x1 < x2 + w2 and
+    x2 < x1 + w1 and
+    y1 < y2 + h2 and
+    y2 < y1 + h1
+end
+
 function love.load()
   love.graphics.setBackgroundColor(189, 195, 255)
   player.img = love.graphics.newImage('dude.png')
@@ -61,7 +68,7 @@ function love.update(dt)
         --generate obstacles
         lastTimeObstacle = lastTimeObstacle - 10
         if lastTimeObstacle <= 0 then
-            lastTimeObstacle = love.math.math.random(200, 700)
+            lastTimeObstacle = love.math.random(200, 700)
             newObstacle = {x = 640, y = 370, width = 25, height = 50, counted = false}
         end
 
@@ -87,7 +94,11 @@ function love.update(dt)
                 love.audio.play(hitSND)
             end
         end
+    end
 end
 
 function love.draw()
+    --draw floor
+    love.graphics.setColor(64, 199, 84)
+    love.graphics.rectangle('fill', 0, 420, 640, 60)
 end
