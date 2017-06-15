@@ -118,4 +118,10 @@ function love.draw()
         love.graphics.setColor(94, 117, 113)
         love.graphics.print('Game Over', 220, 100)
     end
+
+    --draw obstacles
+    for i, obstacle in ipairs(obstacles) do
+        love.graphics.setColor(255, 0, 0)
+        love.graphics.rectangle('fill', obstacle.x, obstacle.y, obstacle.width, obstacle.height)
+    end
 end
