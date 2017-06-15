@@ -108,4 +108,14 @@ function love.draw()
 
     --draw player
     love.graphics.draw(player.img, player.x, player.y)
+
+    --draw point counter and game over
+    love.graphics.setColor(94, 117, 113)
+    love.graphics.setFont(font)
+    love.graphics.print(counter, 300, 200)
+
+    if (isGameOver) then
+        love.graphics.setColor(94, 117, 113)
+        love.graphics.print('Game Over', 220, 100)
+    end
 end
