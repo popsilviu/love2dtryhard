@@ -3,7 +3,7 @@ bottomY = 420
 playerFloorY = 370
 jumpAccel = 16
 initGravity = 200
-conter = 0 
+conter = 0
 obstavles = {}
 lastTimeObstavle = 1000
 gravity = 200
@@ -35,6 +35,12 @@ function love.update(dt)
  			love.audio.play(jumpSND)
  			player.jumping = true
  		end
+
+        --player is jumping
+        if player.jumping and player.accel > 0 then
+            player.y = player.y + player.accel
+            player.accel = player.accel - 1
+        end
 end
 
 function love.draw()
