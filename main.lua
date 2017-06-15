@@ -4,8 +4,8 @@ playerFloorY = 370
 jumpAccel = 16
 initGravity = 200
 conter = 0
-obstavles = {}
-lastTimeObstavle = 1000
+obstacles = {}
+lastTimeObstacle = 1000
 gravity = 200
 jumpSND = nil
 hitSND = nil
@@ -57,6 +57,13 @@ function love.update(dt)
             player.accel = jumpAccel
             gravity = initGravity
         end
+
+        --generate obstacles
+        lastTimeObstacle = lastTimeObstacle - 10
+        if lastTimeObstacle <= 0 then
+            lastTimeObstacle = love.math.math.random(200, 700)
+            newObstacle = {x = 640, y = 370, width = 25, height = 50, counted = false}
+        end        
 end
 
 function love.draw()
