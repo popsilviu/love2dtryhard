@@ -105,4 +105,7 @@ function love.draw()
     --draw sun
     love.graphics.setColor(255, 255, 51)
     love.graphics.circle('fill', 550, 70, 40, 100)
+
+    --draw player
+    love.graphics.draw(player.img, player.x, player.y)
 end
